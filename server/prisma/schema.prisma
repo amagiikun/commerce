@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  admin
+  operator
+  marketing
+}
+
+enum ProductStatus {
+  on_sale
+  draft
+  sold_out
+}
+
+enum OrderStatus {
+  pending
+  paid
+  shipping
+  completed
+  refund
+}
+
+enum CampaignStatus {
+  upcoming
+  running
+  ended
+}
+
+model User {
+  id           String   @id
+  username     String   @unique
+  passwordHash String
+  name         String
+  role         UserRole
+  avatar       String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Product {
+  id        String        @id
+  name      String
+  category  String
+  price     Int
+  stock     Int
+  sales     Int
+  status    ProductStatus
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model Order {
+  id           String      @id
+  orderNo      String      @unique
+  customerName String
+  amount       Int
+  status       OrderStatus
+  channel      String
+  address      String
+  createdAt    DateTime
+  items        OrderItem[]
+}
+
+model OrderItem {
+  id          String @id
+  orderId     String
+  productName String
+  quantity    Int
+  order       Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+}
+
+model Campaign {
+  id             String         @id
+  name           String
+  status         CampaignStatus
+  budget         Int
+  spend          Int
+  conversionRate Float
+  startAt        DateTime
+  endAt          DateTime
+  owner          String
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}

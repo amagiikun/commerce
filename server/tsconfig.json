@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2022"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "rootDir": ".",
+    "outDir": "dist",
+    "types": ["node", "vitest/globals"],
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src/app.ts",
+    "src/server.ts",
+    "src/contracts.ts",
+    "src/config/**/*.ts",
+    "src/data/**/*.ts",
+    "src/fixtures/**/*.ts",
+    "src/lib/**/*.ts",
+    "src/middleware/**/*.ts",
+    "src/routes/**/*.ts",
+    "src/types/**/*.d.ts",
+    "src/utils/**/*.ts",
+    "tests/**/*.ts",
+    "prisma/**/*.ts"
+  ]
+}
